@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Jujutsu Kaisen';
+    src: url('./Jujutsu Kaisen.ttf') format('truetype');
+  }
+  
+  span {
+    font-family: 'Jujutsu Kaisen', sans-serif;
+  }
+  
