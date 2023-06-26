@@ -1,82 +1,58 @@
-import {
-  FileOutlined,
-  LogoutOutlined,
-  MenuOutlined,
-  PieChartOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import { Breadcrumb, Card, Divider, Layout, Menu, theme } from "antd";
-import { useContext, useState } from "react";
-import Logo from "./Logo";
+import React, { useContext, useEffect, useState } from "react";
+import { Button, Card, notification } from "antd";
+import { UsergroupAddOutlined } from "@ant-design/icons";
+import { collection, addDoc } from "firebase/firestore";
 import StoreContext from "../context/Context";
-
-const { Header, Content, Footer, Sider } = Layout;
-
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
-
-const items = [getItem("Pagina Inicial", "1", <MenuOutlined />)];
+import { db } from "../firebase";
+import {
+  AddCharacterButton,
+  getCharList,
+} from "../firebase/firebaseControllers";
 
 const Dashboard = () => {
-  const { user, token, id, setToken, setId, setUser } =
-    useContext(StoreContext);
-  const [collapsed, setCollapsed] = useState(true);
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  const [char, setChar] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [api, contextHolder] = notification.useNotification();
 
-  const handleLogout = () => {
-    setToken(null);
-    setId(null);
-    setUser(null);
+  const openNotificationWithIcon = (type) => {
+    api[type]({
+      message: "Personagem criado com sucesso",
+      duration: 2,
+    });
   };
 
-  const menuItems = token
-    ? [...items, getItem("Logout", "logout", <LogoutOutlined />)]
-    : items;
+  const { user, id, setUser } = useContext(StoreContext);
+
+  const fetchData = async () => {
+    try {
+      const charList = await getCharList(id);
+      setChar(charList);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
-        theme="light"
-      >
-        <Menu
-          theme="light"
-          defaultSelectedKeys={["1"]}
-          mode="inline"
-          items={menuItems}
-          onSelect={(item) => item.key === "logout" && handleLogout()}
-        />
-      </Sider>
-      <Layout>
-        <Content style={{ margin: "0 16px" }}>
-          <Divider>
-            <Logo />
-          </Divider>
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: colorBgContainer,
-            }}
-          >
-            <Card>Bem-vindo(a) {user}</Card>
-          </div>
-        </Content>
-        <Footer style={{ textAlign: "center" }}>
-          BOC ©2023 Desenvolvido por T Jurge
-        </Footer>
-      </Layout>
-    </Layout>
+    <Card>
+      {contextHolder}
+      Bem-vindo(a) {user}
+      <p>
+        {char?.length < 1 ? (
+          <AddCharacterButton
+          loading={loading}
+            openNotificationWithIcon={openNotificationWithIcon}
+            fetchData={fetchData}
+          />
+        ) : null}
+      </p>
+      <ul>
+        {char?.map((char, i) => (
+          <li key={i}>{char.player}</li>
+        ))}
+      </ul>
+    </Card>
   );
 };
 

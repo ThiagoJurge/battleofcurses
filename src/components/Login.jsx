@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Button, Card, Typography } from "antd";
 import { signInWithPopup, GoogleAuthProvider, getAuth } from "firebase/auth";
 import { GoogleOutlined } from "@ant-design/icons";
-import db from "../firebase";
+import { db } from "../firebase";
 import StoreContext from "../context/Context";
 import Background from "../assets/login.png";
 import Logo from "./Logo";
@@ -57,15 +57,15 @@ const Login = () => {
         }}
       >
         <center>
-            <Logo />
-            <Button
-              type="primary"
-              icon={<GoogleOutlined />}
-              onClick={handleGoogleSignIn}
-              size="large"
-            >
-              ENTRE COM O GOOGLE
-            </Button>
+          <Logo />
+          <Button
+            type="primary"
+            icon={<GoogleOutlined />}
+            onClick={handleGoogleSignIn}
+            size="large"
+          >
+            ENTRE COM O GOOGLE
+          </Button>
         </center>
       </Card>
     </div>
