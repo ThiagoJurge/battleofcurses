@@ -5,7 +5,7 @@ const { Title } = Typography;
 const Logo = () => {
   return (
     
-    <Title className="gradient-text" level={3}>
+    <Title className="gradient-text">
     <span>Battle of Curses</span>
   </Title>
   )

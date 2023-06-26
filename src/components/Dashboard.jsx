@@ -24,7 +24,8 @@ function getItem(label, key, icon, children) {
 const items = [getItem("Pagina Inicial", "1", <MenuOutlined />)];
 
 const Dashboard = () => {
-  const { user, token, setToken } = useContext(StoreContext);
+  const { user, token, id, setToken, setId, setUser } =
+    useContext(StoreContext);
   const [collapsed, setCollapsed] = useState(true);
   const {
     token: { colorBgContainer },
@@ -32,6 +33,8 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     setToken(null);
+    setId(null);
+    setUser(null);
   };
 
   const menuItems = token
@@ -69,9 +72,7 @@ const Dashboard = () => {
               background: colorBgContainer,
             }}
           >
-            <Card>
-              Bem-vindo(a) {user}
-            </Card>
+            <Card>Bem-vindo(a) {user}</Card>
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>

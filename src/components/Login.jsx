@@ -21,8 +21,8 @@ const Login = () => {
         const user = result.user.displayName;
         const id = result.user.uid;
         setToken(token);
-        setUser(user)
-        setId(id)
+        setUser(user);
+        setId(id);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -53,15 +53,17 @@ const Login = () => {
           borderRadius: 0,
         }}
       >
-        <Logo/>
-        <Button
-          type="primary"
-          icon={<GoogleOutlined />}
-          onClick={handleGoogleSignIn}
-          style={{ width: "100%" }}
-        >
-          ENTRE COM O GOOGLE
-        </Button>
+        <center>
+          <Logo />
+          <Button
+            type="primary"
+            icon={<GoogleOutlined />}
+            onClick={handleGoogleSignIn}
+            size="large"
+          >
+            ENTRE COM O GOOGLE
+          </Button>
+        </center>
       </Card>
     </div>
   );
