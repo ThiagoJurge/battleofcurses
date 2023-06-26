@@ -4,9 +4,8 @@ import { signInWithPopup, GoogleAuthProvider, getAuth } from "firebase/auth";
 import { GoogleOutlined } from "@ant-design/icons";
 import db from "../firebase";
 import StoreContext from "../context/Context";
+import Background from "../assets/login.png";
 import Logo from "./Logo";
-import { useNavigate } from "react-router-dom";
-const { Title } = Typography;
 
 const Login = () => {
   const auth = getAuth();
@@ -51,18 +50,22 @@ const Login = () => {
           justifyContent: "center",
           alignItems: "center",
           borderRadius: 0,
+          background: `rgba(0, 0, 0, 0.9) url(${Background})`,
+          backgroundSize: "cover",
         }}
       >
         <center>
-          <Logo />
-          <Button
-            type="primary"
-            icon={<GoogleOutlined />}
-            onClick={handleGoogleSignIn}
-            size="large"
-          >
-            ENTRE COM O GOOGLE
-          </Button>
+          <Card style={{background: `rgba(0, 0, 0, 0.8)`}}>
+            <Logo />
+            <Button
+              type="primary"
+              icon={<GoogleOutlined />}
+              onClick={handleGoogleSignIn}
+              size="large"
+            >
+              ENTRE COM O GOOGLE
+            </Button>
+          </Card>
         </center>
       </Card>
     </div>
