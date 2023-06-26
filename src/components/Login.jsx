@@ -39,23 +39,24 @@ const Login = () => {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
+        background: `url(${Background})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
       <Card
         style={{
           width: "100%",
-          height: "100%",
+          maxWidth: 400,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
           borderRadius: 0,
-          background: `rgba(0, 0, 0, 0.9) url(${Background})`,
-          backgroundSize: "cover",
+          backgroundColor: "rgba(0, 0, 0, 0.8)",
         }}
       >
         <center>
-          <Card style={{background: `rgba(0, 0, 0, 0.8)`}}>
             <Logo />
             <Button
               type="primary"
@@ -65,7 +66,6 @@ const Login = () => {
             >
               ENTRE COM O GOOGLE
             </Button>
-          </Card>
         </center>
       </Card>
     </div>
