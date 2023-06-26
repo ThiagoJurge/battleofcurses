@@ -7,11 +7,11 @@ const NotFound = () => {
   const navigate = useNavigate();
   return (
     <Result
-      title="Essa página não existe..."
+      title={<span>Essa página não existe...</span>}
       icon={<img src={Image404} alt='NotFoundImage' style={{width: '10%'}} />}
       extra={
         <Button type="primary" onClick={() => navigate("/")}>
-          Voltar
+          <span>Voltar</span>
         </Button>
       }
     />

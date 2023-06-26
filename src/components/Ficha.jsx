@@ -25,7 +25,7 @@ const Ficha = () => {
     fetchData();
   }, []);
   return (
-    <Card>
+    <>
       {contextHolder}
       {char?.length < 1 ? (
         <>
@@ -35,15 +35,17 @@ const Ficha = () => {
             fetchData={fetchData}
           />
         </>
-      ) : null}
-      <ul>
-        {char?.map((char, i) => (
-            <>
-          <li key={i}>Nome: {char.char}</li>
-          </>
-        ))}
-      </ul>
-    </Card>
+      ) : (
+        <List
+          header={<div>Ficha</div>}
+          bordered
+          dataSource={char}
+          renderItem={(item, i) => (
+            <List.Item key={i}>Nome: {item.char}</List.Item>
+          )}
+        />
+      )}
+    </>
   );
 };
 

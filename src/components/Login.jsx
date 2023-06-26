@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Card, Typography } from "antd";
 import { signInWithPopup, GoogleAuthProvider, getAuth } from "firebase/auth";
 import { GoogleOutlined } from "@ant-design/icons";
@@ -11,8 +11,10 @@ const Login = () => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
   const { setToken, setUser, setId } = useContext(StoreContext);
+  const [loading, setLoading] = useState(false);
 
   const handleGoogleSignIn = () => {
+    setLoading(true);
     signInWithPopup(auth, provider)
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -22,6 +24,7 @@ const Login = () => {
         setToken(token);
         setUser(user);
         setId(id);
+        setLoading(true);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -29,7 +32,8 @@ const Login = () => {
         const email = error.customData.email;
         const credential = GoogleAuthProvider.credentialFromError(error);
         console.log(errorCode, errorMessage, email, credential);
-      });
+        setLoading(true);
+      })
   };
 
   return (
@@ -59,6 +63,7 @@ const Login = () => {
         <center>
           <Logo />
           <Button
+            loading={loading}
             type="primary"
             icon={<GoogleOutlined />}
             onClick={handleGoogleSignIn}
