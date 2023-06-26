@@ -3,6 +3,7 @@ import "./App.css";
 import AppLayout from "./layout/AppLayout/AppLayout";
 import { useEffect, useState } from "react";
 import LoadingPage from "./components/LoadingPage";
+import RoutePrivate from "./components/privateroute/PrivateRoute";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -16,11 +17,15 @@ const App = () => {
 
   if (isLoading) {
     // Render a loading indicator or any other content while waiting for the page to load
-    return <LoadingPage/>
+    return <LoadingPage />;
   }
 
   // Render the component content after the page has finished loading
-  return <AppLayout />;
+  return (
+    <RoutePrivate>
+      <AppLayout />
+    </RoutePrivate>
+  );
 };
 
 export default App;

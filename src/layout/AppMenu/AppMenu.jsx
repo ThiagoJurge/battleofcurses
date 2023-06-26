@@ -1,7 +1,12 @@
-import { LogoutOutlined, MenuOutlined } from "@ant-design/icons";
+import {
+  LogoutOutlined,
+  MenuOutlined,
+  ProfileOutlined,
+} from "@ant-design/icons";
 import { Menu } from "antd";
 import React, { useContext } from "react";
 import StoreContext from "../../context/Context";
+import { NavLink } from "react-router-dom";
 
 function getItem(label, key, icon, children) {
   return {
@@ -12,10 +17,12 @@ function getItem(label, key, icon, children) {
   };
 }
 
-const items = [getItem("Pagina Inicial", "1", <MenuOutlined />)];
+const items = [
+  getItem(<NavLink to={"/"}>Pagina Inicial</NavLink>, "1", <MenuOutlined />),
+  getItem(<NavLink to={"/ficha"}>Ficha</NavLink>, "2", <ProfileOutlined />),
+];
 const AppMenu = () => {
-  const { user, token, id, setToken, setId, setUser } =
-    useContext(StoreContext);
+  const { token, setToken, setId, setUser } = useContext(StoreContext);
 
   const handleLogout = () => {
     setToken(null);
