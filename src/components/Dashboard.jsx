@@ -49,11 +49,6 @@ const Dashboard = () => {
         onCollapse={(value) => setCollapsed(value)}
         theme="light"
       >
-        <center>
-          <div className="demo-logo-vertical">
-            <Logo />
-          </div>
-        </center>
         <Menu
           theme="light"
           defaultSelectedKeys={["1"]}
@@ -64,7 +59,9 @@ const Dashboard = () => {
       </Sider>
       <Layout>
         <Content style={{ margin: "0 16px" }}>
-          <Divider />
+          <Divider>
+            <Logo />
+          </Divider>
           <div
             style={{
               padding: 24,
