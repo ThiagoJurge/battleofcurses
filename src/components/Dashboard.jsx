@@ -1,8 +1,17 @@
-import { FileOutlined, PieChartOutlined, UserOutlined } from '@ant-design/icons';
-import { Breadcrumb, Divider, Layout, Menu, theme } from 'antd';
-import { useState } from 'react';
-import Logo from './Logo';
+import {
+  FileOutlined,
+  LogoutOutlined,
+  MenuOutlined,
+  PieChartOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { Breadcrumb, Card, Divider, Layout, Menu, theme } from "antd";
+import { useContext, useState } from "react";
+import Logo from "./Logo";
+import StoreContext from "../context/Context";
+
 const { Header, Content, Footer, Sider } = Layout;
+
 function getItem(label, key, icon, children) {
   return {
     key,
@@ -11,44 +20,48 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
-const items = [
-  getItem('Option 1', '1', <PieChartOutlined />),
-  getItem('Option 2', '2', <PieChartOutlined />),
-  getItem('User', 'sub1', <UserOutlined />, [
-    getItem('Tom', '3'),
-    getItem('Bill', '4'),
-    getItem('Alex', '5'),
-  ]),
-  getItem('Team', 'sub2', <PieChartOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-  getItem('Files', '9', <FileOutlined />),
-];
+
+const items = [getItem("Pagina Inicial", "1", <MenuOutlined />)];
+
 const Dashboard = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const { user, token, setToken } = useContext(StoreContext);
+  const [collapsed, setCollapsed] = useState(true);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  const handleLogout = () => {
+    setToken(null);
+  };
+
+  const menuItems = token
+    ? [...items, getItem("Logout", "logout", <LogoutOutlined />)]
+    : items;
+
   return (
-    <Layout
-      style={{
-        minHeight: '100vh',
-      }}
-    >
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} theme='light'>
+    <Layout style={{ minHeight: "100vh" }}>
+      <Sider
+        collapsible
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
+        theme="light"
+      >
         <center>
-        <div className="demo-logo-vertical">
-          <Logo/>
-        </div>
+          <div className="demo-logo-vertical">
+            <Logo />
+          </div>
         </center>
-        <Menu theme="light" defaultSelectedKeys={['1']} mode="inline" items={items} />
+        <Menu
+          theme="light"
+          defaultSelectedKeys={["1"]}
+          mode="inline"
+          items={menuItems}
+          onSelect={(item) => item.key === "logout" && handleLogout()}
+        />
       </Sider>
       <Layout>
-        
-        <Content
-          style={{
-            margin: '0 16px',
-          }}
-        >
-          <Divider/>
+        <Content style={{ margin: "0 16px" }}>
+          <Divider />
           <div
             style={{
               padding: 24,
@@ -56,18 +69,17 @@ const Dashboard = () => {
               background: colorBgContainer,
             }}
           >
-            Bill is a cat.
+            <Card>
+              Bem-vindo(a) {user}
+            </Card>
           </div>
         </Content>
-        <Footer
-          style={{
-            textAlign: 'center',
-          }}
-        >
-          Ant Design ©2023 Created by Ant UED
+        <Footer style={{ textAlign: "center" }}>
+          BOC ©2023 Desenvolvido por T Jurge
         </Footer>
       </Layout>
     </Layout>
   );
 };
+
 export default Dashboard;

@@ -5,20 +5,24 @@ import { GoogleOutlined } from "@ant-design/icons";
 import db from "../firebase";
 import StoreContext from "../context/Context";
 import Logo from "./Logo";
+import { useNavigate } from "react-router-dom";
 const { Title } = Typography;
 
 const Login = () => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
-  const { setToken } = useContext(StoreContext);
+  const { setToken, setUser, setId } = useContext(StoreContext);
 
   const handleGoogleSignIn = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
-        const user = result.user;
+        const user = result.user.displayName;
+        const id = result.user.uid;
         setToken(token);
+        setUser(user)
+        setId(id)
       })
       .catch((error) => {
         const errorCode = error.code;
