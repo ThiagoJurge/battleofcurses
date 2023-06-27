@@ -1,8 +1,9 @@
-import { Card, Divider, List, notification } from "antd";
+import { Card, Descriptions, Divider, List, notification } from "antd";
 import React, { useContext, useEffect, useState } from "react";
 import { db } from "../firebase";
 import { AddCharacter, getCharList } from "../firebase/firebaseControllers";
 import StoreContext from "../context/Context";
+import Paragraph from "antd/es/typography/Paragraph";
 
 const Ficha = () => {
   const [api, contextHolder] = notification.useNotification();
@@ -24,6 +25,7 @@ const Ficha = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
   return (
     <>
       {contextHolder}
@@ -36,14 +38,28 @@ const Ficha = () => {
           />
         </>
       ) : (
-        <List
-          header={<div>Ficha</div>}
+        <Descriptions
+          title="Ficha"
+          layout="horizontal"
+          column={1}
           bordered
-          dataSource={char}
-          renderItem={(item, i) => (
-            <List.Item key={i}>Nome: {item.char}</List.Item>
-          )}
-        />
+          size="middle"
+          labelStyle={{ fontSize: "20px" }}
+        >
+          {char.map((item) => (
+            <>
+              <Descriptions.Item label="Nome">{item.char}</Descriptions.Item>
+              <Descriptions.Item label="Idade">{item.idade}</Descriptions.Item>
+              <Descriptions.Item label="Sexo">{item.sexo}</Descriptions.Item>
+              <Descriptions.Item label="História">
+                {item.historia}
+              </Descriptions.Item>
+              <Descriptions.Item label="Personalidade">
+                {item.personalidade}
+              </Descriptions.Item>
+            </>
+          ))}
+        </Descriptions>
       )}
     </>
   );

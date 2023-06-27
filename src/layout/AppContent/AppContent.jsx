@@ -14,7 +14,6 @@ const AppContent = () => {
     <Content
       style={{
         margin: "0 16px",
-        height: "100vh",
         background: `url(${Background})`,
         backgroundSize: "cover",
         backgroundPosition: "center",

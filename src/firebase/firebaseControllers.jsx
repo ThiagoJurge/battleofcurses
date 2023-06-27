@@ -2,7 +2,8 @@ import { getDocs, collection, addDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import React, { useContext, useState } from "react";
 import StoreContext from "../context/Context";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, InputNumber, Select } from "antd";
+import TextArea from "antd/es/input/TextArea";
 
 export const getCharList = async (id) => {
   try {
@@ -24,7 +25,7 @@ export const AddCharacter = ({ openNotificationWithIcon, fetchData }) => {
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      const docRef = await addDoc(collection(db, id), values);
+      addDoc(collection(db, id), values);
       openNotificationWithIcon("success");
     } catch (error) {
       console.error("Error adding document: ", error);
@@ -66,6 +67,62 @@ export const AddCharacter = ({ openNotificationWithIcon, fetchData }) => {
         ]}
       >
         <Input />
+      </Form.Item>
+
+      
+      <Form.Item
+        label="Idade"
+        name="idade"
+        rules={[
+          {
+            required: true,
+            message: "Este campo é obrigatório",
+          },
+        ]}
+      >
+        <InputNumber />
+      </Form.Item>
+
+      <Form.Item
+        label="Personalidade"
+        name="personalidade"
+        rules={[
+          {
+            required: true,
+            message: "Este campo é obrigatório",
+          },
+        ]}
+      >
+        <TextArea />
+      </Form.Item>
+
+      <Form.Item
+        label="História"
+        name="historia"
+        rules={[
+          {
+            required: true,
+            message: "Este campo é obrigatório",
+          },
+        ]}
+      >
+        <TextArea />
+      </Form.Item>
+
+      <Form.Item
+        label="Sexo"
+        name="sexo"
+        rules={[
+          {
+            required: true,
+            message: "Este campo é obrigatório",
+          },
+        ]}
+      >
+        <Select>
+          <Select.Option key={'masculino'}>Masculino</Select.Option>
+          <Select.Option key={'feminino'}>Feminino</Select.Option>
+        </Select>
       </Form.Item>
 
       <Form.Item
